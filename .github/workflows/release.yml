@@ -11,14 +11,7 @@ permissions:
 
 jobs:
   release:
-    strategy:
-      fail-fast: false
-      # Run one OS at a time so each job adds its files to the same draft
-      # release instead of racing to create duplicates
-      max-parallel: 1
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v5
@@ -27,10 +20,6 @@ jobs:
         with:
           node-version: 22
           cache: npm
-
-      - name: Install Linux packaging tools
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y rpm fakeroot dpkg
 
       - run: npm ci
 
