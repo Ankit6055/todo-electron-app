@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    >
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    >
+    <title>To-do</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <h1>To-do</h1>
+        <p id="count" class="count"></p>
+      </header>
+
+      <form id="new-todo" class="new-todo">
+        <input id="new-todo-text" type="text" placeholder="What needs doing?" autocomplete="off" autofocus>
+        <button type="submit">Add</button>
+      </form>
+
+      <nav class="filters">
+        <button type="button" data-filter="all">All</button>
+        <button type="button" data-filter="active">Active</button>
+        <button type="button" data-filter="done">Done</button>
+      </nav>
+
+      <ul id="list" class="list"></ul>
+      <p id="empty" class="empty"></p>
+
+      <footer class="footer">
+        <span class="hint">Double-click a task to edit it</span>
+        <button id="clear-done" type="button" class="link">Clear completed</button>
+      </footer>
+    </main>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
