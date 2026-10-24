@@ -1,5 +1,8 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+const { execFileSync } = require('node:child_process');
+const fs = require('node:fs');
+const path = require('node:path');
 
 module.exports = {
   packagerConfig: {
@@ -37,6 +40,20 @@ module.exports = {
       },
     },
   ],
+  hooks: {
+    // Packaging edits Info.plist and flips fuses after Electron was signed,
+    // which breaks its ad-hoc signature and makes macOS call the app "damaged".
+    // Re-sign ad-hoc so the signature is valid again (no Apple account needed).
+    postPackage: async (forgeConfig, { platform, outputPaths }) => {
+      if (platform !== 'darwin') return;
+      for (const outputPath of outputPaths) {
+        for (const entry of fs.readdirSync(outputPath)) {
+          if (!entry.endsWith('.app')) continue;
+          execFileSync('codesign', ['--force', '--deep', '--sign', '-', path.join(outputPath, entry)]);
+        }
+      }
+    },
+  },
   plugins: [
     {
       name: '@electron-forge/plugin-auto-unpack-natives',
