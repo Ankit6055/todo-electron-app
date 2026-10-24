@@ -3,6 +3,9 @@ const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('node:path')
 const fs = require('node:fs/promises')
 
+// Quit when Squirrel launches the app during Windows install/uninstall
+if (require('electron-squirrel-startup')) app.quit()
+
 const todosFile = () => path.join(app.getPath('userData'), 'todos.json')
 
 const loadTodos = async () => {

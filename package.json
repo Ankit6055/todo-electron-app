@@ -1,9 +1,9 @@
 {
   "name": "todo-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple to-do app built with Electron",
   "license": "ISC",
-  "author": "",
+  "author": "Ankit",
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
